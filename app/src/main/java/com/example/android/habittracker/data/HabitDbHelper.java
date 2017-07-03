@@ -8,18 +8,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.android.habittracker.data.HabitContract.HabitEntry;
 
-/**
- * Created by RonaldZboj on 2017-07-03.
- */
-
 public class HabitDbHelper extends SQLiteOpenHelper {
 
     // Database helper for access to the database
     private HabitDbHelper mDbHelper;
 
 
-    public static final String DATABASE_NAME = "habits.db";
-    public static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "habits.db";
+    private static final int DATABASE_VERSION = 1;
 
     private static final String SQL_CREATE_HABIT_TABLE =
             "CREATE TABLE " + HabitEntry.TABLE_NAME + " (" +
@@ -49,9 +45,7 @@ public class HabitDbHelper extends SQLiteOpenHelper {
         onUpgrade(db, oldVersion, newVersion);
     }
 
-    public void insertHabbit() {
-
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+    public static void insertHabit(SQLiteDatabase db) {
 
         ContentValues values = new ContentValues();
         values.put(HabitEntry.COLUMN_HABIT_NAME, "Violin");
@@ -61,9 +55,8 @@ public class HabitDbHelper extends SQLiteOpenHelper {
         long newRowId = db.insert(HabitEntry.TABLE_NAME, null, values);
     }
 
-    public Cursor DisplayDatabaseInfo() {
+    public static Cursor DisplayDatabaseInfo(SQLiteDatabase db) {
 
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         String[] projection = {
                 HabitEntry._ID,
